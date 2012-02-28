@@ -1,11 +1,12 @@
 class MinValueFinder
-  def initialize(function, max_num_of_threads=2040)
+  def initialize(function, max_num_of_threads=370)
     @function = function
     @max_num_of_threads = max_num_of_threads
   end
 
   def min_on(range)
     sub_solutions = []
+    i = 0
     range.each_slice(slice_size_for(range)) do |sub_p|
       sub_solutions << solver(sub_p)
     end
@@ -22,6 +23,6 @@ class MinValueFinder
   end
 
   def slice_size_for(problem)
-    (range.to_a.size.to_f / @max_num_of_threads.to_f).ceil
+    (problem.to_a.size.to_f / @max_num_of_threads.to_f).ceil
   end
 end
