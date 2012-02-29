@@ -1,28 +1,40 @@
 class MinValueFinder
+
+  def merge(sub_solutions)
+ 	raise NotImplementedError
+  end 
+
+  def split(problem)
+  	raise NotImplementedError
+  end 
+
+  def is_base_case(problem)
+  	raise NotImplementedError
+  end 
+
+  def solve_base(problem)
+        raise NotImplementedError
+  end
+
+
   def initialize(function, max_num_of_threads=370)
     @function = function
     @max_num_of_threads = max_num_of_threads
   end
 
   def min_on(range)
-    sub_solutions = []
-    i = 0
-    range.each_slice(slice_size_for(range)) do |sub_p|
-      sub_solutions << solver(sub_p)
-    end
-    sub_solutions.map(&:value).min
+  	solve(range)	
   end
 
-  private
-  def solver(problem)
-    Thread.new do
-      problem.inject([]) do |results, value|
-        results << @function.call(value)
-      end.min
-    end
-  end
-
-  def slice_size_for(problem)
-    (problem.to_a.size.to_f / @max_num_of_threads.to_f).ceil
+  def solve(problem)
+	if (is_base_case(problem))
+		solve_base_case(problem)
+	else 
+		subSolutions = []
+		split(problem).each do |subProblem| 
+			subSolutions.push(solve(subProblem))
+		end    
+		merge(subSolutions)
+	end 
   end
 end

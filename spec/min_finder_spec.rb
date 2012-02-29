@@ -31,8 +31,12 @@ describe MinValueFinder do
     end
   end
 
-  it 'handles large problems' do
+ xit 'handles large problems' do
     MinValueFinder.new(slow_neg).min_on(0..6000).should == -6000
   end
+
+  it 'should throw stuff' do 
+   DivideAndConquer.new.split(0..2) == (0..2)
+  end 
 end
 
