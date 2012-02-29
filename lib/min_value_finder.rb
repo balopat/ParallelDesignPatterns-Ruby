@@ -1,7 +1,7 @@
 class MinValueFinder
 
   def merge(sub_solutions)
-	sub_solutions.min
+	sub_solutions.map(&:value).min
   end 
 
   def split(problem)
@@ -14,7 +14,7 @@ class MinValueFinder
   end 
 
   def solve_base(problem)
-       @function.call(problem.to_a[0]) 
+       problem.each{|val| return @function.call(val)}.min
   end
 
 
@@ -24,16 +24,16 @@ class MinValueFinder
   end
 
   def min_on(range)
-  	solve(range)	
+  	solve(range, 5)	
   end
 
-  def solve(problem)
-	if (is_base_case(problem))
+  def solve(problem, level)
+	if (level == 0 || is_base_case(problem))
 		solve_base(problem)
 	else 
 		subSolutions = []
 		split(problem).each do |subProblem| 
-			subSolutions.push(solve(subProblem))
+			subSolutions.push(Thread.new{solve(subProblem, level-1)})
 		end    
 		merge(subSolutions)
 	end 
