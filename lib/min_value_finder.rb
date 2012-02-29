@@ -1,19 +1,20 @@
 class MinValueFinder
 
   def merge(sub_solutions)
- 	raise NotImplementedError
+	sub_solutions.min
   end 
 
   def split(problem)
-  	raise NotImplementedError
+  	problem.each_slice(problem.to_a.length/2)
   end 
 
   def is_base_case(problem)
-  	raise NotImplementedError
+  	problem.to_a.length == 1
+
   end 
 
   def solve_base(problem)
-        raise NotImplementedError
+       @function.call(problem.to_a[0]) 
   end
 
 
