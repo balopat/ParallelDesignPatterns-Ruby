@@ -28,7 +28,7 @@ class MinValueFinder
 
   def solve(problem)
 	if (is_base_case(problem))
-		solve_base_case(problem)
+		solve_base(problem)
 	else 
 		subSolutions = []
 		split(problem).each do |subProblem| 
